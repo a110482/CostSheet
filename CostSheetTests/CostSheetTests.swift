@@ -42,16 +42,16 @@ class CostSheetTests: XCTestCase {
     
     // MARK: SQLCenter
     func testdropAllTable(){
-        let sql = SQLCenter()
+        let sql = SQL()
         sql?.dropAllTable()
     }
     
     func testextablishAllTable(){
-        let sql = SQLCenter()
+        let sql = SQL()
         sql?.establishAllTable()
     }
     func testinsertDemoData(){
-        let sql = SQLCenter()
+        let sql = SQL()
         
         sql?.seeCategoryDatabase()
         

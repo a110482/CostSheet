@@ -12,7 +12,7 @@ import UIKit
 class LaunchViewController:UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
-        let sql = SQLCenter()
+        let sql = SQL()
         sql?.establishAllTable()
         segueToMainView()
     }

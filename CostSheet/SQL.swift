@@ -9,7 +9,7 @@
 import Foundation
 import SQLite
 
-struct SQLCenter{
+struct SQL{
     var SQLDataBase:Connection?     // 資料庫接口
     
     init?(){

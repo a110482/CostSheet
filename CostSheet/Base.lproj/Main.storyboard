@@ -288,7 +288,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingCategoryTableCell" id="s7g-Cb-gQJ" userLabel="SettingCategoryTableCell" customClass="SettingTableViewCategoryCell" customModule="CostSheet" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SettingTableViewCategoryCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingCategoryTableCell" id="s7g-Cb-gQJ" userLabel="SettingCategoryTableCell" customClass="SettingTableViewCategoryCell" customModule="CostSheet" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s7g-Cb-gQJ" id="Y5X-d3-ODu">
@@ -310,13 +310,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lkc-9T-Bip">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iac-Dd-v6B">
                                                     <rect key="frame" x="250" y="0.0" width="125" height="59.5"/>
-                                                    <state key="normal" title="3000"/>
-                                                </button>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="yM4-X7-YBb" firstAttribute="width" secondItem="Lkc-9T-Bip" secondAttribute="width" id="3Ss-rb-Ztf"/>
+                                                <constraint firstItem="iac-Dd-v6B" firstAttribute="width" secondItem="yM4-X7-YBb" secondAttribute="width" id="OBb-o7-GHy"/>
                                                 <constraint firstItem="yM4-X7-YBb" firstAttribute="width" secondItem="vY9-Ok-522" secondAttribute="width" id="lf9-Cx-RcV"/>
                                             </constraints>
                                         </stackView>
@@ -328,8 +330,12 @@
                                         <constraint firstItem="A81-Eg-zJN" firstAttribute="leading" secondItem="Y5X-d3-ODu" secondAttribute="leading" id="a8C-nX-dWP"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="category" destination="yM4-X7-YBb" id="lka-iy-wN8"/>
+                                    <outlet property="costSheet" destination="iac-Dd-v6B" id="SeJ-SW-7ml"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingTableViewFixedCostCell" id="fRl-Y3-BRH" userLabel="SettingFixedCostTableCell" customClass="SettingTableViewFixedCostCell" customModule="CostSheet" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SettingTableViewFixedCostCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingTableViewFixedCostCell" id="fRl-Y3-BRH" userLabel="SettingFixedCostTableCell" customClass="SettingTableViewFixedCostCell" customModule="CostSheet" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fRl-Y3-BRH" id="Zqh-Wu-b3B">
@@ -345,25 +351,29 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="39m-mW-5hP">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="項目" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2t-dg-dD2">
                                                     <rect key="frame" x="90" y="0.0" width="89.5" height="43.5"/>
-                                                    <state key="normal" title="名目"/>
-                                                </button>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="預計花費" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LNi-M7-Tfb">
                                                     <rect key="frame" x="179.5" y="0.0" width="90" height="43.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iWj-t6-x8q">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fgs-LM-Yak">
                                                     <rect key="frame" x="269.5" y="0.0" width="89.5" height="43.5"/>
-                                                    <state key="normal" title="1000"/>
-                                                </button>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="wKl-iz-RhT" firstAttribute="width" secondItem="39m-mW-5hP" secondAttribute="width" id="8iz-pV-d1j"/>
+                                                <constraint firstItem="Fgs-LM-Yak" firstAttribute="width" secondItem="wKl-iz-RhT" secondAttribute="width" id="efE-xG-Jnd"/>
                                                 <constraint firstItem="wKl-iz-RhT" firstAttribute="width" secondItem="LNi-M7-Tfb" secondAttribute="width" id="gzm-wk-BMU"/>
-                                                <constraint firstItem="wKl-iz-RhT" firstAttribute="width" secondItem="iWj-t6-x8q" secondAttribute="width" id="oWE-16-sGe"/>
+                                                <constraint firstItem="K2t-dg-dD2" firstAttribute="width" secondItem="wKl-iz-RhT" secondAttribute="width" id="m0A-CB-YW8"/>
                                             </constraints>
                                         </stackView>
                                     </subviews>
@@ -374,6 +384,11 @@
                                         <constraint firstItem="NaG-7o-o1w" firstAttribute="leading" secondItem="Zqh-Wu-b3B" secondAttribute="leadingMargin" id="peG-Ta-Ne4"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="category" destination="wKl-iz-RhT" id="hGZ-v5-aa5"/>
+                                    <outlet property="costSheet" destination="Fgs-LM-Yak" id="xnQ-hZ-p2p"/>
+                                    <outlet property="terms" destination="K2t-dg-dD2" id="nqI-By-ZL3"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

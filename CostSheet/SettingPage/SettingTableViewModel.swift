@@ -17,13 +17,20 @@ class SettingTableViewModel{
         }
     }
     
+    // 儲存“固定開銷”的資料
     var fixedCostDataList = Array<SettingTableViewFixedCostCellData>(){
         didSet{
             NotificationCenter.default.post(Notification(name: Notification.Name(fixedCostDataListUpdata)))
         }
     }
     
-    
+    // MARK: 關於“分類”的函數
+    // 刷新所有“分類”項目下的資料
+    func updataAllCategoryDataFromDatabase(){
+        let database = SQL()
+        let cellData = database!.getAllCategoryData()
+        categoryDataList = cellData
+    }
     
     
 }
@@ -36,7 +43,12 @@ struct SettingTableViewCategoryCellData {
     let moneyUnit = moneyUnitSymbl
 }
 struct SettingTableViewFixedCostCellData {
-    
+    var databaseId:Int
+    var category:String
+    var index:Int
+    var costSheet:Double
+    var terms:String
+    let moneyUnit = moneyUnitSymbl
 }
 
 

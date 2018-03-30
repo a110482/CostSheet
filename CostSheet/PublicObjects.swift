@@ -7,16 +7,28 @@
 //
 import Foundation
 
-// 普通公用變數
+// MARK: 普通公用變數
 public let moneyUnitSymbl = Locale.current.currencySymbol   // 貨幣單位
 
-// 通知中心監聽鍵值
+// MARK: 通知中心監聽鍵值
 public let moneyLeftTableViewModelUpdate = "moneyLeftTableViewModelUpdate"
 public let settingTableViewShowCategory = "settingTableViewShowCategory"
 public let fixedCostDataListUpdata = "fixedCostDataListUpdata"
 public let categoryDataListUpdata = "categoryDataListUpdata"
 
-
+// MARK: extension
+// 若小數點後無數字，不顯示小數點
+extension Double{
+    func tryToCutDotString() -> String{
+        let selfInt = Int(self)
+        if self - Double(selfInt) == 0{
+            return String(selfInt)
+        }
+        else{
+            return String(self)
+        }
+    }
+}
 
 
 

@@ -35,7 +35,7 @@ class SettingViewController:UIViewController{
             }
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert](_) in
                 if self.checkTextVaild(text: alert?.textFields![0].text) && self.checkDoubleVaild(text: alert?.textFields![1].text){
-                    SQLCenter()?.createNewCategory(
+                    SQL()?.createNewCategory(
                         category: alert!.textFields![0].text!,
                         costSheet: Double(alert!.textFields![1].text!)!
                     )

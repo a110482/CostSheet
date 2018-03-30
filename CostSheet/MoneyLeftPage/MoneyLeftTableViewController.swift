@@ -44,18 +44,7 @@ class MoneyLeftTableViewController:UITableViewController{
         let data = model.tableViewData[indexPath.row]
         
         cell.category.text = data.category
-        
-        // 若小數點後無數字，不顯示小數點
-        let moneyLeftInt = Int(data.moneyLeft)
-        let moneyShowOnCell:String
-        if data.moneyLeft - Double(moneyLeftInt) == 0{
-            moneyShowOnCell = "\(moneyLeftInt)"
-        }
-        else{
-            moneyShowOnCell = "\(data.moneyLeft)"
-        }
-        
-        cell.moneyLeft.text = "\(data.moneyUnit) \(moneyShowOnCell)"
+        cell.moneyLeft.text = "\(data.moneyUnit) \(data.moneyLeft.tryToCutDotString())"
         return cell
     }
     
