@@ -117,7 +117,8 @@ struct SQL{
                     databaseId: row[id],
                     category: row[category],
                     index: row[index],
-                    costSheet: row[costSheet]))
+                    costSheet: row[costSheet],
+                    moneyUnit: moneyUnitSymbl!))
             }
         }
         return resultArray

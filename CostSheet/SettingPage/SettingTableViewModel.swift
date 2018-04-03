@@ -32,23 +32,29 @@ class SettingTableViewModel{
         categoryDataList = cellData
     }
     
-    
 }
 
-struct SettingTableViewCategoryCellData {
-    var databaseId:Int
-    var category:String
-    var index:Int
-    var costSheet:Double
-    let moneyUnit = moneyUnitSymbl
+protocol BasicCellData{
+    var databaseId:Int{get set}
+    var category:String{get set}
+    var index:Int{get set}
+    var costSheet:Double{get set}
+    var moneyUnit:String{get set}
 }
-struct SettingTableViewFixedCostCellData {
+struct SettingTableViewCategoryCellData:BasicCellData {
     var databaseId:Int
     var category:String
     var index:Int
     var costSheet:Double
+    var moneyUnit:String
+}
+struct SettingTableViewFixedCostCellData:BasicCellData {
+    var databaseId:Int
+    var category:String
+    var index:Int
+    var costSheet:Double
+    var moneyUnit:String
     var terms:String
-    let moneyUnit = moneyUnitSymbl
 }
 
 
