@@ -34,28 +34,6 @@ class SettingTableViewModel{
     
 }
 
-protocol BasicCellData{
-    var databaseId:Int{get set}
-    var category:String{get set}
-    var index:Int{get set}
-    var costSheet:Double{get set}
-    var moneyUnit:String{get set}
-}
-struct SettingTableViewCategoryCellData:BasicCellData {
-    var databaseId:Int
-    var category:String
-    var index:Int
-    var costSheet:Double
-    var moneyUnit:String
-}
-struct SettingTableViewFixedCostCellData:BasicCellData {
-    var databaseId:Int
-    var category:String
-    var index:Int
-    var costSheet:Double
-    var moneyUnit:String
-    var terms:String
-}
 
 
 

@@ -44,21 +44,22 @@ class SettingTableViewController:UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:BasicCellData
         switch tablePresentMode {
         case .categort:
             let cellData = model.categoryDataList[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewCategoryCell
-            cell.category.text = cellData.category
-            cell.costSheet.text = cellData.costSheet.tryToCutDotString()
-            return cell
+            cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewCategoryCell    
         case .fixedCost:
             let cellData = model.fixedCostDataList[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewFixedCostCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewFixedCostCell
             cell.category.text = cellData.category
             cell.costSheet.text = cellData.costSheet.tryToCutDotString()
             cell.terms.text = cellData.terms
             return cell
         }
+        cell.category.text = cellData.category
+        cell.costSheet.text = cellData.costSheet.tryToCutDotString()
+        return cell
     }
     
     func reloadTableView(commandFrom mode:TableViewPresentMode){
@@ -68,6 +69,29 @@ class SettingTableViewController:UITableViewController{
     }
 }
 
+// cell Data 的格式
+protocol BasicCellData{
+    var databaseId:Int{get set}     // 位於資料庫的pk值
+    var category:String{get set}     // 分類 
+    var index:Int{get set}          // cell 顯示的順序
+    var costSheet:Double{get set}    // 預算花費金額
+    var moneyUnit:String{get set}    // 金額單位 美金台幣之類的
+}
+struct SettingTableViewCategoryCellData:BasicCellData {
+    var databaseId:Int
+    var category:String
+    var index:Int
+    var costSheet:Double
+    var moneyUnit:String
+}
+struct SettingTableViewFixedCostCellData:BasicCellData {
+    var databaseId:Int
+    var category:String
+    var index:Int
+    var costSheet:Double
+    var moneyUnit:String
+    var terms:String            // 次要項目 （例如 服飾分類下的“鞋子”
+}
 
 
 
