@@ -68,7 +68,7 @@ struct SQL{
         }
     }
     
-    func createNewCategory(category:String, costSheet:Double){
+    func createNewCategory(category:String, costSheet:Double, complete:(()->Void)?){
         var categoryCount = 0
         if let lastData = try? SQLDataBase!.prepare(Category.limit(1).order(id.desc)).first(where: { (row) -> Bool in
             return true
@@ -83,11 +83,14 @@ struct SQL{
             self.index <- categoryCount
         )
         let _ = try? SQLDataBase?.run(insert)
+        complete?()
+        notificationCategorySQLChanged()
     }
     
     func removeCategory(by id:Int){
         let delete = Category.filter(self.id == id).delete()
         let _ = try? SQLDataBase?.run(delete)
+        notificationCategorySQLChanged()
     }
     
     // 把兩筆資料的顯示順序互換
@@ -106,6 +109,7 @@ struct SQL{
         let tempIndex = obj_1!![index]
         let _ = try? SQLDataBase?.run(Category.filter(id == id_1).update(index <- obj_2!![index]))
         let _ = try? SQLDataBase?.run(Category.filter(id == id_2).update(index <- tempIndex))
+        notificationCategorySQLChanged()
     }
     
     // 取得所有“分類”項目下的資料
@@ -158,6 +162,11 @@ struct SQL{
         else{
             throw SQLErrors.establishCostDetailFail
         }
+    }
+    
+    // MARK: private function
+    private func notificationCategorySQLChanged(){
+        NotificationCenter.default.post(Notification(name: Notification.Name(catagorySQLChanged)))
     }
     
 }

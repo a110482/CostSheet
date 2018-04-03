@@ -37,7 +37,8 @@ class SettingViewController:UIViewController{
                 if self.checkTextVaild(text: alert?.textFields![0].text) && self.checkDoubleVaild(text: alert?.textFields![1].text){
                     SQL()?.createNewCategory(
                         category: alert!.textFields![0].text!,
-                        costSheet: Double(alert!.textFields![1].text!)!
+                        costSheet: Double(alert!.textFields![1].text!)!,
+                        complete: nil
                     )
                 }
             }))

@@ -26,6 +26,7 @@ class SettingTableViewController:UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         tablePresentMode = .categort
+        reloadTableView(commandFrom: tablePresentMode)
         NotificationCenter.default.addObserver(forName: Notification.Name(settingTableDataListUpdata), object: nil, queue: OperationQueue.main) {[weak self] (_) in
             self?.reloadTableView(commandFrom:.categort)
         }
@@ -73,13 +74,6 @@ class SettingTableViewController:UITableViewController{
     func reloadTableView(commandFrom mode:TableViewPresentMode){
         if tablePresentMode == mode{
             tableView.reloadData()
-        }
-    }
-    
-    func cellFactory<T:BasicSettingCell>(reUseCell:T, indexPath:IndexPath){
-        
-        if let cell = reUseCell as? SettingTableViewFixedCostCell{
-            
         }
     }
 }

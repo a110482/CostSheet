@@ -10,6 +10,12 @@ import Foundation
 import SQLite
 
 class SettingTableViewModel{
+    init(){
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: catagorySQLChanged), object: nil, queue: .main) { [weak self](_) in
+            self?.updataAllCategoryDataFromDatabase()
+        }
+    }
+    
     // 儲存“分類”的資料
     var settingTableDataList = Array<BasicCellData>(){
         didSet{
