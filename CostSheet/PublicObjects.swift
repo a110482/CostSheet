@@ -13,8 +13,7 @@ public let moneyUnitSymbl = Locale.current.currencySymbol   // 貨幣單位
 // MARK: 通知中心監聽鍵值
 public let moneyLeftTableViewModelUpdate = "moneyLeftTableViewModelUpdate"
 public let settingTableViewShowCategory = "settingTableViewShowCategory"
-public let fixedCostDataListUpdata = "fixedCostDataListUpdata"
-public let categoryDataListUpdata = "categoryDataListUpdata"
+public let settingTableDataListUpdata = "settingTableDataListUpdata"
 
 // MARK: extension
 // 若小數點後無數字，不顯示小數點

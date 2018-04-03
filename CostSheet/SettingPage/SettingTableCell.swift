@@ -9,16 +9,17 @@
 import Foundation
 import UIKit
 
-class SettingTableViewCategoryCell:UITableViewCell{
+class BasicSettingCell:UITableViewCell{
     @IBOutlet weak var category: UILabel!
     @IBOutlet weak var costSheet: UILabel!
-    
 }
 
-class SettingTableViewFixedCostCell:UITableViewCell{
-    @IBOutlet weak var category: UILabel!
+class SettingTableViewCategoryCell:BasicSettingCell{
+
+}
+
+class SettingTableViewFixedCostCell:BasicSettingCell{
     @IBOutlet weak var terms: UILabel!
-    @IBOutlet weak var costSheet: UILabel!
 }
 
 

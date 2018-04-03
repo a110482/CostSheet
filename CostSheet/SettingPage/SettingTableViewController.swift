@@ -26,40 +26,48 @@ class SettingTableViewController:UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         tablePresentMode = .categort
-        NotificationCenter.default.addObserver(forName: Notification.Name(categoryDataListUpdata), object: nil, queue: OperationQueue.main) {[weak self] (_) in
+        NotificationCenter.default.addObserver(forName: Notification.Name(settingTableDataListUpdata), object: nil, queue: OperationQueue.main) {[weak self] (_) in
             self?.reloadTableView(commandFrom:.categort)
-        }
-        NotificationCenter.default.addObserver(forName: Notification.Name(fixedCostDataListUpdata), object: nil, queue: OperationQueue.main) {[weak self] (_) in
-            self?.reloadTableView(commandFrom:.fixedCost)
         }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tablePresentMode {
         case .categort:
-            return model.categoryDataList.count
+            return model.settingTableDataList.count
         case .fixedCost:
-            return model.fixedCostDataList.count
+            return model.settingTableDataList.count
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:BasicCellData
+        var basicCellData = model.settingTableDataList[indexPath.row]
+        let basicCell:BasicSettingCell
+        
+        // 根據狀況給予不同的cell
         switch tablePresentMode {
         case .categort:
-            let cellData = model.categoryDataList[indexPath.row]
-            cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewCategoryCell    
+            basicCell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewCategoryCell
         case .fixedCost:
-            let cellData = model.fixedCostDataList[indexPath.row]
-            cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewFixedCostCell
-            cell.category.text = cellData.category
-            cell.costSheet.text = cellData.costSheet.tryToCutDotString()
-            cell.terms.text = cellData.terms
-            return cell
+            basicCell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewFixedCostCell
         }
-        cell.category.text = cellData.category
-        cell.costSheet.text = cellData.costSheet.tryToCutDotString()
-        return cell
+        
+        // 先塞入共用資料
+        basicCell.category.text = basicCellData.category
+        basicCell.costSheet.text = basicCellData.costSheet.tryToCutDotString()
+        
+        // 再塞每種cell不同的資料
+        if let categoryCell = basicCell as? SettingTableViewCategoryCell{
+            return categoryCell
+        }
+        else if let fixedCostCell = basicCell as? SettingTableViewFixedCostCell{
+            let fixedCostcellData = basicCellData as! SettingTableViewFixedCostCellData
+            fixedCostCell.terms.text = fixedCostcellData.terms
+            return fixedCostCell
+        }
+        else{
+            return basicCell
+        }
     }
     
     func reloadTableView(commandFrom mode:TableViewPresentMode){
@@ -67,31 +75,15 @@ class SettingTableViewController:UITableViewController{
             tableView.reloadData()
         }
     }
+    
+    func cellFactory<T:BasicSettingCell>(reUseCell:T, indexPath:IndexPath){
+        
+        if let cell = reUseCell as? SettingTableViewFixedCostCell{
+            
+        }
+    }
 }
 
-// cell Data 的格式
-protocol BasicCellData{
-    var databaseId:Int{get set}     // 位於資料庫的pk值
-    var category:String{get set}     // 分類 
-    var index:Int{get set}          // cell 顯示的順序
-    var costSheet:Double{get set}    // 預算花費金額
-    var moneyUnit:String{get set}    // 金額單位 美金台幣之類的
-}
-struct SettingTableViewCategoryCellData:BasicCellData {
-    var databaseId:Int
-    var category:String
-    var index:Int
-    var costSheet:Double
-    var moneyUnit:String
-}
-struct SettingTableViewFixedCostCellData:BasicCellData {
-    var databaseId:Int
-    var category:String
-    var index:Int
-    var costSheet:Double
-    var moneyUnit:String
-    var terms:String            // 次要項目 （例如 服飾分類下的“鞋子”
-}
 
 
 
