@@ -53,7 +53,7 @@ class SettingViewController:UIViewController{
     
     
     // MARK: suport func
-    // 檢查文字是否有效
+    // 檢查文字是否有效 移除空格並防止nil值
     func checkTextVaild(text:String?) -> Bool{
         if let _ = text, text!.replacingOccurrences(of: " ", with: "") != ""{
             return true
@@ -66,7 +66,7 @@ class SettingViewController:UIViewController{
         }
     }
     
-    // 檢查文字是否能轉換為數字
+    // 檢查文字是否能轉換為浮點數
     func checkDoubleVaild(text:String?) -> Bool{
         if let _ = text , let _ = Double(text!.replacingOccurrences(of: " ", with: "")){
             return true

@@ -31,6 +31,11 @@ class SettingTableViewModel{
         let cellData = database!.getAllCategoryData()
         settingTableDataList = cellData
     }
+    // 刷新所有“故動開銷”項目下所有資料
+    func updataAllFixedCostDataFromDatabase(){
+        //let database = SQL()
+        
+    }
     
 }
 // cell Data 的格式

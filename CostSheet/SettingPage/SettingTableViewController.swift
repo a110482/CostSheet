@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 // tabview 可能顯示兩種資料內容(categort or fixedCost) 但同時只會顯示一種
+// cell 更新機制： 1. (資料庫變動 發送NotificationCenter 給model) 或是 (手動切換更新模式 由本ＶＣ要求model去SQL撈資料)
+//               2. model 發送 NotificationCenter 通知 VC 資料有更新
+//               3. 本ＶＣ 拷貝一份 資料的array到本地 然後加上一個“新增”的cell 再刷新頁面
 class SettingTableViewController:UITableViewController{
     var tablePresentMode = TableViewPresentMode.categort{   // 記錄現在tableView的顯示內容是哪一種
         didSet{
@@ -22,33 +25,35 @@ class SettingTableViewController:UITableViewController{
         }
     }
     let model = SettingTableViewModel()
+    var settingTableDataList:Array<BasicCellData> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tablePresentMode = .categort
-        reloadTableView(commandFrom: tablePresentMode)
+        
+        let nib = UINib(nibName: "PlusActionCell", bundle: nil)     // 具有“新增項目”功能的 cell
+        tableView.register(nib, forCellReuseIdentifier: "PlusActionCell")
         NotificationCenter.default.addObserver(forName: Notification.Name(settingTableDataListUpdata), object: nil, queue: OperationQueue.main) {[weak self] (_) in
-            self?.reloadTableView(commandFrom:.categort)
+            self?.settingTableDataList = (self?.model.settingTableDataList)!
+            self?.customReloadTableView()
         }
+        tablePresentMode = .categort
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch tablePresentMode {
-        case .categort:
-            return model.settingTableDataList.count
-        case .fixedCost:
-            return model.settingTableDataList.count
-        }
+        return settingTableDataList.count + 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var basicCellData = model.settingTableDataList[indexPath.row]
+        guard indexPath.row < self.settingTableDataList.count else {
+            return tableView.dequeueReusableCell(withIdentifier: "PlusActionCell")!
+        }
+        var basicCellData = settingTableDataList[indexPath.row]
         let basicCell:BasicSettingCell
         
         // 根據狀況給予不同的cell
         switch tablePresentMode {
         case .categort:
-            basicCell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewCategoryCell
+            basicCell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewCategoryCell") as! SettingTableViewCategoryCell
         case .fixedCost:
             basicCell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewFixedCostCell") as! SettingTableViewFixedCostCell
         }
@@ -71,11 +76,10 @@ class SettingTableViewController:UITableViewController{
         }
     }
     
-    func reloadTableView(commandFrom mode:TableViewPresentMode){
-        if tablePresentMode == mode{
-            tableView.reloadData()
-        }
+    func customReloadTableView(){
+        tableView.reloadData()
     }
+    
 }
 
 

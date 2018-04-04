@@ -28,6 +28,8 @@
 		CF8CA2F1205F9230001D3B2E /* MoneyLeftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA2F0205F9230001D3B2E /* MoneyLeftCell.swift */; };
 		CF8CA2F3205FE849001D3B2E /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA2F2205FE849001D3B2E /* SettingTableViewController.swift */; };
 		CF8CA2F5205FE87F001D3B2E /* SettingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA2F4205FE87F001D3B2E /* SettingTableCell.swift */; };
+		CFA35C322074EBDD00C5E515 /* PlusActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFA35C312074EBDD00C5E515 /* PlusActionCell.xib */; };
+		CFA35C342074EEAF00C5E515 /* PlusActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA35C332074EEAF00C5E515 /* PlusActionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,8 @@
 		CF8CA2F0205F9230001D3B2E /* MoneyLeftCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyLeftCell.swift; sourceTree = "<group>"; };
 		CF8CA2F2205FE849001D3B2E /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		CF8CA2F4205FE87F001D3B2E /* SettingTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableCell.swift; sourceTree = "<group>"; };
+		CFA35C312074EBDD00C5E515 /* PlusActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlusActionCell.xib; sourceTree = "<group>"; };
+		CFA35C332074EEAF00C5E515 /* PlusActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusActionCell.swift; sourceTree = "<group>"; };
 		F254DAAC37F9A939997BE0C8 /* Pods-CostSheetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CostSheetUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CostSheetUITests/Pods-CostSheetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,6 +136,8 @@
 				CF8CA2F2205FE849001D3B2E /* SettingTableViewController.swift */,
 				CF37E9B920627F99008921A3 /* SettingTableViewModel.swift */,
 				CF8CA2F4205FE87F001D3B2E /* SettingTableCell.swift */,
+				CFA35C332074EEAF00C5E515 /* PlusActionCell.swift */,
+				CFA35C312074EBDD00C5E515 /* PlusActionCell.xib */,
 			);
 			path = SettingPage;
 			sourceTree = "<group>";
@@ -342,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF8CA2B9205F4F2F001D3B2E /* LaunchScreen.storyboard in Resources */,
+				CFA35C322074EBDD00C5E515 /* PlusActionCell.xib in Resources */,
 				CF8CA2B6205F4F2F001D3B2E /* Assets.xcassets in Resources */,
 				CF8CA2B4205F4F2F001D3B2E /* Main.storyboard in Resources */,
 			);
@@ -514,6 +521,7 @@
 				CF8CA2EC205F66B8001D3B2E /* MoneyLeftViewController.swift in Sources */,
 				CF8CA2E4205F5625001D3B2E /* LaunchViewController.swift in Sources */,
 				CF8CA2F5205FE87F001D3B2E /* SettingTableCell.swift in Sources */,
+				CFA35C342074EEAF00C5E515 /* PlusActionCell.swift in Sources */,
 				CF8CA2EF205F6BE5001D3B2E /* MoneyLeftTableViewModel.swift in Sources */,
 				CF8CA2F3205FE849001D3B2E /* SettingTableViewController.swift in Sources */,
 				CF8CA2AF205F4F2F001D3B2E /* AppDelegate.swift in Sources */,
