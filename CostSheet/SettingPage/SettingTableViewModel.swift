@@ -31,7 +31,7 @@ class SettingTableViewModel{
         let cellData = database!.getAllCategoryData()
         settingTableDataList = cellData
     }
-    // 刷新所有“故動開銷”項目下所有資料
+    // 刷新所有“固定開銷”項目下所有資料
     func updataAllFixedCostDataFromDatabase(){
         //let database = SQL()
         

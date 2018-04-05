@@ -33,6 +33,9 @@
                     <constraint firstAttribute="bottomMargin" secondItem="c5O-sU-jxS" secondAttribute="bottom" id="ext-dn-SUv"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="symboLabel" destination="c5O-sU-jxS" id="6Du-ai-VvZ"/>
+            </connections>
             <point key="canvasLocation" x="-195" y="93"/>
         </tableViewCell>
     </objects>

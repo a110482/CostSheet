@@ -30,8 +30,10 @@ class SettingTableViewController:UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let nib = UINib(nibName: "PlusActionCell", bundle: nil)     // 具有“新增項目”功能的 cell
+        // 註冊具有“新增項目”功能的 cell
+        let nib = UINib(nibName: "PlusActionCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "PlusActionCell")
+        
         NotificationCenter.default.addObserver(forName: Notification.Name(settingTableDataListUpdata), object: nil, queue: OperationQueue.main) {[weak self] (_) in
             self?.settingTableDataList = (self?.model.settingTableDataList)!
             self?.customReloadTableView()
@@ -44,9 +46,18 @@ class SettingTableViewController:UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // “新增項目”功能的 cell
         guard indexPath.row < self.settingTableDataList.count else {
-            return tableView.dequeueReusableCell(withIdentifier: "PlusActionCell")!
+            let plusCell = tableView.dequeueReusableCell(withIdentifier: "PlusActionCell") as! PlusActionCell
+            
+            // 增加點擊手勢
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tap))
+            plusCell.addGestureRecognizer(tapGesture)
+            
+            return plusCell
         }
+        
+        // 顯示一般 cell
         var basicCellData = settingTableDataList[indexPath.row]
         let basicCell:BasicSettingCell
         
@@ -76,8 +87,13 @@ class SettingTableViewController:UITableViewController{
         }
     }
     
+    // private function
     func customReloadTableView(){
         tableView.reloadData()
+    }
+    
+    @objc func tap(){
+        print("tap")
     }
     
 }

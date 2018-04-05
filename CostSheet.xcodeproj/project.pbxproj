@@ -30,6 +30,7 @@
 		CF8CA2F5205FE87F001D3B2E /* SettingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA2F4205FE87F001D3B2E /* SettingTableCell.swift */; };
 		CFA35C322074EBDD00C5E515 /* PlusActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFA35C312074EBDD00C5E515 /* PlusActionCell.xib */; };
 		CFA35C342074EEAF00C5E515 /* PlusActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA35C332074EEAF00C5E515 /* PlusActionCell.swift */; };
+		CFFE06F22075AAE900808079 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFE06F12075AAE900808079 /* CustomAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		CF8CA2F4205FE87F001D3B2E /* SettingTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableCell.swift; sourceTree = "<group>"; };
 		CFA35C312074EBDD00C5E515 /* PlusActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlusActionCell.xib; sourceTree = "<group>"; };
 		CFA35C332074EEAF00C5E515 /* PlusActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusActionCell.swift; sourceTree = "<group>"; };
+		CFFE06F12075AAE900808079 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		F254DAAC37F9A939997BE0C8 /* Pods-CostSheetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CostSheetUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CostSheetUITests/Pods-CostSheetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,8 +138,6 @@
 				CF8CA2F2205FE849001D3B2E /* SettingTableViewController.swift */,
 				CF37E9B920627F99008921A3 /* SettingTableViewModel.swift */,
 				CF8CA2F4205FE87F001D3B2E /* SettingTableCell.swift */,
-				CFA35C332074EEAF00C5E515 /* PlusActionCell.swift */,
-				CFA35C312074EBDD00C5E515 /* PlusActionCell.xib */,
 			);
 			path = SettingPage;
 			sourceTree = "<group>";
@@ -172,8 +172,10 @@
 				CF8CA2DD205F4FBD001D3B2E /* SQL.swift */,
 				CF8CA2E3205F5625001D3B2E /* LaunchViewController.swift */,
 				CF8CA2E5205F5C90001D3B2E /* PublicObjects.swift */,
+				CFFE06F12075AAE900808079 /* CustomAlert.swift */,
 				CF8CA2ED205F6BA5001D3B2E /* MoneyLeftPage */,
 				CF0FEC652060F6B900FD78BF /* SettingPage */,
+				CFFE06EF2075A9D800808079 /* CustomXib */,
 				CF8CA2BA205F4F2F001D3B2E /* Info.plist */,
 			);
 			path = CostSheet;
@@ -216,6 +218,15 @@
 				CF8CA2F0205F9230001D3B2E /* MoneyLeftCell.swift */,
 			);
 			path = MoneyLeftPage;
+			sourceTree = "<group>";
+		};
+		CFFE06EF2075A9D800808079 /* CustomXib */ = {
+			isa = PBXGroup;
+			children = (
+				CFA35C332074EEAF00C5E515 /* PlusActionCell.swift */,
+				CFA35C312074EBDD00C5E515 /* PlusActionCell.xib */,
+			);
+			path = CustomXib;
 			sourceTree = "<group>";
 		};
 		E4BC2F1C66F7C8B3941E88EA /* Pods */ = {
@@ -526,6 +537,7 @@
 				CF8CA2F3205FE849001D3B2E /* SettingTableViewController.swift in Sources */,
 				CF8CA2AF205F4F2F001D3B2E /* AppDelegate.swift in Sources */,
 				CF8CA2E6205F5C90001D3B2E /* PublicObjects.swift in Sources */,
+				CFFE06F22075AAE900808079 /* CustomAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

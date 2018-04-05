@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 class PlusActionCell:UITableViewCell{
+    @IBOutlet weak var symboLabel: UILabel!
     
 }
 
