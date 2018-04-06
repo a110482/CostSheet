@@ -10,6 +10,7 @@ import Foundation
 import SQLite
 
 struct SQL{
+    static let singletom = SQL()
     var SQLDataBase:Connection?     // 資料庫接口
     
     init?(){
@@ -39,6 +40,9 @@ struct SQL{
     // 建立所有資料庫
     func establishAllTable(){
         try!establishCategoryTable()
+        do
+        {try establishCostDetail()}
+        catch{print(error)}
     }
     func dropAllTable(){
         let _  = try? SQLDataBase?.run(Category.drop())
@@ -56,11 +60,11 @@ struct SQL{
     let category = Expression<String>("category")
     let costSheet = Expression<Double>("coseSheet")
     let index = Expression<Int>("index")
-    let id = Expression<Int>("id")
+    let categoryId = Expression<Int>("categoryId")
     
     func establishCategoryTable() throws{
         if let _ = try? SQLDataBase?.run(Category.create(ifNotExists:true){t in
-            t.column(id, primaryKey: true)
+            t.column(categoryId, primaryKey: true)
             t.columns([category, costSheet, index])
         }){}
         else{
@@ -70,11 +74,11 @@ struct SQL{
     
     func createNewCategory(category:String, costSheet:Double, complete:(()->Void)?){
         var categoryCount = 0
-        if let lastData = try? SQLDataBase!.prepare(Category.limit(1).order(id.desc)).first(where: { (row) -> Bool in
+        if let lastData = try? SQLDataBase!.prepare(Category.limit(1).order(categoryId.desc)).first(where: { (row) -> Bool in
             return true
         }){
             if lastData != nil{
-                categoryCount = lastData![id]
+                categoryCount = lastData![categoryId]
             }
         }
         let insert = Category.insert(
@@ -87,8 +91,8 @@ struct SQL{
         notificationCategorySQLChanged()
     }
     
-    func removeCategory(by id:Int){
-        let delete = Category.filter(self.id == id).delete()
+    func removeCategory(byID id:Int){
+        let delete = Category.filter(self.categoryId == id).delete()
         let _ = try? SQLDataBase?.run(delete)
         notificationCategorySQLChanged()
     }
@@ -96,10 +100,10 @@ struct SQL{
     // 把兩筆資料的顯示順序互換
     func changeCategoryIndex(with id_1:Int, and id_2:Int){      // 把兩個資料的 Index 對調
         // 確認有撈到東西
-        let obj_1 = try? SQLDataBase?.prepare(Category.filter(id == id_1)).first(where: { (row) -> Bool in
+        let obj_1 = try? SQLDataBase?.prepare(Category.filter(categoryId == id_1)).first(where: { (row) -> Bool in
             return true
         })
-        let obj_2 = try? SQLDataBase?.prepare(Category.filter(id == id_2)).first(where: { (row) -> Bool in
+        let obj_2 = try? SQLDataBase?.prepare(Category.filter(categoryId == id_2)).first(where: { (row) -> Bool in
             return true
         })
         guard obj_1 != nil && obj_2 != nil else {
@@ -107,8 +111,8 @@ struct SQL{
         }
         // 開始互換
         let tempIndex = obj_1!![index]
-        let _ = try? SQLDataBase?.run(Category.filter(id == id_1).update(index <- obj_2!![index]))
-        let _ = try? SQLDataBase?.run(Category.filter(id == id_2).update(index <- tempIndex))
+        let _ = try? SQLDataBase?.run(Category.filter(categoryId == id_1).update(index <- obj_2!![index]))
+        let _ = try? SQLDataBase?.run(Category.filter(categoryId == id_2).update(index <- tempIndex))
         notificationCategorySQLChanged()
     }
     
@@ -118,7 +122,7 @@ struct SQL{
         if let dataRows = try! SQLDataBase?.prepare(Category.order(index.asc)){
             for row in dataRows{
                 resultArray.append(SettingTableViewCategoryCellData(
-                    databaseId: row[id],
+                    databaseId: row[categoryId],
                     category: row[category],
                     index: row[index],
                     costSheet: row[costSheet],
@@ -140,7 +144,7 @@ struct SQL{
         if let testData = try? SQLDataBase?.prepare(Category).first(where: { (_) -> Bool in
             return true
         }){
-            return testData?[id]
+            return testData?[categoryId]
         }
         return nil
     }
@@ -148,6 +152,7 @@ struct SQL{
     
     // MARK: 明細紀錄
     let CostDetail = Table("CostDetail")
+    let costDetailId = Expression<Int>("costDetailId")
     let categoryPk = Expression<Int>("categoryPk")
     let cost = Expression<Int>("cost")
     let time = Expression<Int>("time")
@@ -155,9 +160,9 @@ struct SQL{
     
     func establishCostDetail() throws{
         if let _ = try? SQLDataBase?.run(CostDetail.create(ifNotExists:true){t in
-            t.column(id, primaryKey: true)
-            t.foreignKey(categoryPk, references: Category, id, update: .cascade, delete: .cascade)
-            t.columns([cost, time, imgPath])
+            t.column(costDetailId, primaryKey: true)
+            t.columns([categoryPk, cost, time, imgPath])
+            t.foreignKey(categoryPk, references: Category, categoryId, update: .cascade, delete: .cascade)
         }){}
         else{
             throw SQLErrors.establishCostDetailFail

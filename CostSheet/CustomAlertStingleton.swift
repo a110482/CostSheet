@@ -34,7 +34,7 @@ struct CustomAlertStingleton {
                 rootVC?.tabBarViewController?.errorAlertString = "數字格式錯誤"
                 return
             }
-            SQL()?.createNewCategory(
+            SQL.singletom?.createNewCategory(
                 category: alert.textFields![0].text!,
                 costSheet: Double(alert.textFields![1].text!)!,
                 complete: nil

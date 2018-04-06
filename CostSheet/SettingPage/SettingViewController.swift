@@ -21,8 +21,20 @@ class SettingViewController:UIViewController{
         
     }
     @IBAction func setFixedCost(_ sender: Any) {
+        
     }
     @IBAction func removeItem(_ sender: Any) {
+        let childVC = self.childViewControllers[0] as! SettingTableViewController
+        if let selectIndex = childVC.selectCellIndex{
+            guard selectIndex.row <= childVC.settingTableDataList.count else{return}
+            let selectCell = childVC.settingTableDataList[selectIndex.row]
+            if tablePresentMode == .categort{
+                SQL.singletom?.removeCategory(byID: selectCell.databaseId)
+            }
+            else{
+                
+            }
+        }
     }
     @IBAction func addItem(_ sender: Any) {
         if tablePresentMode == .categort{
@@ -30,6 +42,7 @@ class SettingViewController:UIViewController{
         }
     }
     @IBAction func upItem(_ sender: Any) {
+        
     }
     @IBAction func downItem(_ sender: Any) {
     }

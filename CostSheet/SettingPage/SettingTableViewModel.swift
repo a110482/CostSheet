@@ -27,7 +27,7 @@ class SettingTableViewModel{
     // MARK: 關於“分類”的函數
     // 刷新所有“分類”項目下的資料
     func updataAllCategoryDataFromDatabase(){
-        let database = SQL()
+        let database = SQL.singletom
         let cellData = database!.getAllCategoryData()
         settingTableDataList = cellData
     }

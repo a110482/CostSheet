@@ -24,7 +24,8 @@ class SettingTableViewController:UITableViewController{
             }
         }
     }
-    let model = SettingTableViewModel()
+    private let model = SettingTableViewModel()
+    var selectCellIndex:IndexPath?
     var settingTableDataList:Array<BasicCellData> = []
     
     override func viewDidLoad() {
@@ -86,14 +87,19 @@ class SettingTableViewController:UITableViewController{
             return basicCell
         }
     }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectCellIndex = indexPath
+    }
     
     // private function
-    func customReloadTableView(){
+    private func customReloadTableView(){
         tableView.reloadData()
     }
     
-    @objc func tap(){
-        print("tap")
+    @objc private func tap(){
+        if tablePresentMode == .categort{
+            self.present(CustomAlertStingleton.addNewCategory(), animated: true, completion: nil)
+        }
     }
     
 }

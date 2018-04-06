@@ -24,7 +24,7 @@ class CostSheetTests: XCTestCase {
     
     // MARK: SettingViewController
     func testcheckIntVaild(){
-        let vc = SettingViewController()
+        let vc = CustomAlertStingleton.self
         var result = vc.checkDoubleVaild(text: nil)
         XCTAssert(!result)
         result = vc.checkDoubleVaild(text: "037")
@@ -35,30 +35,30 @@ class CostSheetTests: XCTestCase {
         XCTAssert(result)
     }
     func testcheckTextVaild(){
-        let vc = SettingViewController()
+        let vc = CustomAlertStingleton.self
         let result = vc.checkTextVaild(text: nil)
         XCTAssert(!result)
     }
     
     // MARK: SQLCenter
     func testdropAllTable(){
-        let sql = SQL()
+        let sql = SQL.singletom
         sql?.dropAllTable()
     }
     
     func testextablishAllTable(){
-        let sql = SQL()
+        let sql = SQL.singletom
         sql?.establishAllTable()
     }
     func testinsertDemoData(){
-        let sql = SQL()
+        let sql = SQL.singletom
         
         sql?.seeCategoryDatabase()
         
         let countBefore = try! sql!.SQLDataBase!.scalar((sql?.Category.count)!)
         // 測試寫入
-        sql?.createNewCategory(category: "衣服", costSheet: 5000)
-        sql?.createNewCategory(category: "鞋子", costSheet: 2000)
+        sql?.createNewCategory(category: "衣服", costSheet: 5000, complete: nil)
+        sql?.createNewCategory(category: "鞋子", costSheet: 2000, complete: nil)
         let countAfter = try! sql!.SQLDataBase!.scalar((sql?.Category.count)!)
         XCTAssert(countAfter - countBefore == 2)
         
@@ -66,17 +66,17 @@ class CostSheetTests: XCTestCase {
         
         // 測試變更index(顯示順序)
         let testDataId = sql!.getTestDataRow()!
-        let index_1 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.id == testDataId)).first { (row) -> Bool in
+        let index_1 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.categoryId == testDataId)).first { (row) -> Bool in
             return true
             }![sql!.index]
-        let index_2 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.id == testDataId + 1)).first { (row) -> Bool in
+        let index_2 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.categoryId == testDataId + 1)).first { (row) -> Bool in
             return true
             }![sql!.index]
         sql!.changeCategoryIndex(with:testDataId, and:testDataId + 1)
-        let newIndex_1 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.id == testDataId)).first { (row) -> Bool in
+        let newIndex_1 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.categoryId == testDataId)).first { (row) -> Bool in
             return true
             }![sql!.index]
-        let newIndex_2 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.id == testDataId + 1)).first { (row) -> Bool in
+        let newIndex_2 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.categoryId == testDataId + 1)).first { (row) -> Bool in
             return true
             }![sql!.index]
         //sql?.seeCategoryDatabase()

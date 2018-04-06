@@ -14,8 +14,7 @@ class LaunchViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let sql = SQL()
-        sql?.establishAllTable()
+        SQL.singletom?.establishAllTable()
         segueToMainView()
     }
     
