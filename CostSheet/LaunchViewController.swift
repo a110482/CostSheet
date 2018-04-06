@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class LaunchViewController:UIViewController{
+    var tabBarViewController:mainTabBarController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let sql = SQL()
@@ -20,6 +22,11 @@ class LaunchViewController:UIViewController{
     private func segueToMainView(){
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "segueToMainView", sender: nil)
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToMainView"{
+            tabBarViewController = segue.destination as? mainTabBarController
         }
     }
 }

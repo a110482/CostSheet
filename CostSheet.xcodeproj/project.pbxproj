@@ -11,6 +11,7 @@
 		3CF8AF4EB6AA6FA77FC1A3A2 /* Pods_CostSheetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135FCA9F7C67232AB1333C66 /* Pods_CostSheetTests.framework */; };
 		640B6E2D2F7D8AB08AE7FD99 /* Pods_CostSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4199C0FA60642F4A96463AF4 /* Pods_CostSheet.framework */; };
 		CF0FEC642060F6AC00FD78BF /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0FEC632060F6AC00FD78BF /* SettingViewController.swift */; };
+		CF365A0A207713F000F7905A /* mainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF365A09207713F000F7905A /* mainTabBarController.swift */; };
 		CF37E9BA20627F99008921A3 /* SettingTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF37E9B920627F99008921A3 /* SettingTableViewModel.swift */; };
 		CF8CA2AF205F4F2F001D3B2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA2AE205F4F2F001D3B2E /* AppDelegate.swift */; };
 		CF8CA2B4205F4F2F001D3B2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF8CA2B2205F4F2F001D3B2E /* Main.storyboard */; };
@@ -30,7 +31,7 @@
 		CF8CA2F5205FE87F001D3B2E /* SettingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA2F4205FE87F001D3B2E /* SettingTableCell.swift */; };
 		CFA35C322074EBDD00C5E515 /* PlusActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFA35C312074EBDD00C5E515 /* PlusActionCell.xib */; };
 		CFA35C342074EEAF00C5E515 /* PlusActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA35C332074EEAF00C5E515 /* PlusActionCell.swift */; };
-		CFFE06F22075AAE900808079 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFE06F12075AAE900808079 /* CustomAlert.swift */; };
+		CFFE06F22075AAE900808079 /* CustomAlertStingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFE06F12075AAE900808079 /* CustomAlertStingleton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		66D85F4D3F2B42D22881A4C1 /* Pods_CostSheetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CostSheetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7418B1811C2FA380AB04D95 /* Pods-CostSheetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CostSheetUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CostSheetUITests/Pods-CostSheetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CF0FEC632060F6AC00FD78BF /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		CF365A09207713F000F7905A /* mainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainTabBarController.swift; sourceTree = "<group>"; };
 		CF37E9B920627F99008921A3 /* SettingTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewModel.swift; sourceTree = "<group>"; };
 		CF8CA2AB205F4F2F001D3B2E /* CostSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CostSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8CA2AE205F4F2F001D3B2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,7 +88,7 @@
 		CF8CA2F4205FE87F001D3B2E /* SettingTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableCell.swift; sourceTree = "<group>"; };
 		CFA35C312074EBDD00C5E515 /* PlusActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlusActionCell.xib; sourceTree = "<group>"; };
 		CFA35C332074EEAF00C5E515 /* PlusActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusActionCell.swift; sourceTree = "<group>"; };
-		CFFE06F12075AAE900808079 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		CFFE06F12075AAE900808079 /* CustomAlertStingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertStingleton.swift; sourceTree = "<group>"; };
 		F254DAAC37F9A939997BE0C8 /* Pods-CostSheetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CostSheetUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CostSheetUITests/Pods-CostSheetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -171,8 +173,9 @@
 				CF8CA2B2205F4F2F001D3B2E /* Main.storyboard */,
 				CF8CA2DD205F4FBD001D3B2E /* SQL.swift */,
 				CF8CA2E3205F5625001D3B2E /* LaunchViewController.swift */,
+				CF365A09207713F000F7905A /* mainTabBarController.swift */,
 				CF8CA2E5205F5C90001D3B2E /* PublicObjects.swift */,
-				CFFE06F12075AAE900808079 /* CustomAlert.swift */,
+				CFFE06F12075AAE900808079 /* CustomAlertStingleton.swift */,
 				CF8CA2ED205F6BA5001D3B2E /* MoneyLeftPage */,
 				CF0FEC652060F6B900FD78BF /* SettingPage */,
 				CFFE06EF2075A9D800808079 /* CustomXib */,
@@ -537,7 +540,8 @@
 				CF8CA2F3205FE849001D3B2E /* SettingTableViewController.swift in Sources */,
 				CF8CA2AF205F4F2F001D3B2E /* AppDelegate.swift in Sources */,
 				CF8CA2E6205F5C90001D3B2E /* PublicObjects.swift in Sources */,
-				CFFE06F22075AAE900808079 /* CustomAlert.swift in Sources */,
+				CF365A0A207713F000F7905A /* mainTabBarController.swift in Sources */,
+				CFFE06F22075AAE900808079 /* CustomAlertStingleton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

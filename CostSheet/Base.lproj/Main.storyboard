@@ -259,10 +259,10 @@
             </objects>
             <point key="canvasLocation" x="-242" y="2325"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar Controller-->
         <scene sceneID="Vxh-KI-7PU">
             <objects>
-                <tabBarController id="Yhf-fx-aFY" sceneMemberID="viewController">
+                <tabBarController id="Yhf-fx-aFY" customClass="mainTabBarController" customModule="CostSheet" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="fWj-3r-10b"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5se-nB-XuA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>

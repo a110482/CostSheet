@@ -10,6 +10,7 @@ import Foundation
 // MARK: 普通公用變數
 public let moneyUnitSymbl = Locale.current.currencySymbol   // 貨幣單位
 
+
 // MARK: 通知中心監聽鍵值
 public let moneyLeftTableViewModelUpdate = "moneyLeftTableViewModelUpdate"  // 預算金額頁面 模型有變動
 //public let settingTableViewShowCategory = "settingTableViewShowCategory"    //

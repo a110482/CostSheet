@@ -26,9 +26,8 @@ class SettingViewController:UIViewController{
     }
     @IBAction func addItem(_ sender: Any) {
         if tablePresentMode == .categort{
-            CustomAlert.addNewCategory(presentOn: self)
+            self.present(CustomAlertStingleton.addNewCategory(), animated: true, completion: nil)
         }
-    
     }
     @IBAction func upItem(_ sender: Any) {
     }
