@@ -44,8 +44,7 @@ class SettingViewController:UIViewController{
     @IBAction func upItem(_ sender: Any) {
         let childVC = self.childViewControllers[0] as! SettingTableViewController
         if let selectIndex = childVC.selectCellIndex{
-            guard selectIndex.row <= childVC.settingTableDataList.count else{return}
-            guard selectIndex.row - 1 <= childVC.settingTableDataList.count else{return}
+            guard selectIndex.row <= childVC.settingTableDataList.count - 1 else{return}
             guard selectIndex.row - 1 >= 0 else{return}
             let selectCell = childVC.settingTableDataList[selectIndex.row]
             let selectAboveCell = childVC.settingTableDataList[selectIndex.row - 1]
@@ -57,14 +56,21 @@ class SettingViewController:UIViewController{
             }
             let newIndex = IndexPath(row: selectIndex.row - 1, section: 0)
             childVC.selectCellIndex = newIndex
-            childVC.tableView.selectRow(at: newIndex, animated: false, scrollPosition: UITableViewScrollPosition.bottom)
+            let cellRect = childVC.tableView.rectForRow(at: newIndex)
+            let cellTotleMinHeight = cellRect.origin.y
+            let scroolPosition = UITableViewScrollPosition.none     // 變換位置後 scroll的位置
+            childVC.tableView.selectRow(at: newIndex, animated: true, scrollPosition: scroolPosition)
+            if !childVC.tableView.bounds.contains(CGPoint(x: 0, y: cellTotleMinHeight)){    // 如果新位置 不再可視範圍內
+                //scroolPosition = .top
+                childVC.tableView.scrollToRow(at: newIndex, at: .top, animated: true)
+            }
+            
         }
     }
     @IBAction func downItem(_ sender: Any) {
         let childVC = self.childViewControllers[0] as! SettingTableViewController
         if let selectIndex = childVC.selectCellIndex{
-            guard selectIndex.row <= childVC.settingTableDataList.count else{return}
-            guard selectIndex.row + 1 <= childVC.settingTableDataList.count else{return}
+            guard selectIndex.row + 1 <= childVC.settingTableDataList.count - 1 else{return}
             let selectCell = childVC.settingTableDataList[selectIndex.row]
             let selectBelowCell = childVC.settingTableDataList[selectIndex.row + 1]
             if tablePresentMode == .categort{
@@ -75,7 +81,15 @@ class SettingViewController:UIViewController{
             }
             let newIndex = IndexPath(row: selectIndex.row + 1, section: 0)
             childVC.selectCellIndex = newIndex
-            childVC.tableView.selectRow(at: newIndex, animated: false, scrollPosition: UITableViewScrollPosition.top)
+            //if childVC.tableView.cellForRow(at: newIndex).vis
+            let cellRect = childVC.tableView.rectForRow(at: newIndex)
+            let cellTotleMaxHeight = cellRect.origin.y + cellRect.height
+            var scroolPosition = UITableViewScrollPosition.none
+            if childVC.tableView.bounds.contains(CGPoint(x: 0, y: cellTotleMaxHeight)){
+                scroolPosition = .bottom
+            }
+            childVC.tableView.selectRow(at: newIndex, animated: true, scrollPosition: scroolPosition)
+            
         }
     }
     
