@@ -42,9 +42,41 @@ class SettingViewController:UIViewController{
         }
     }
     @IBAction func upItem(_ sender: Any) {
-        
+        let childVC = self.childViewControllers[0] as! SettingTableViewController
+        if let selectIndex = childVC.selectCellIndex{
+            guard selectIndex.row <= childVC.settingTableDataList.count else{return}
+            guard selectIndex.row - 1 <= childVC.settingTableDataList.count else{return}
+            guard selectIndex.row - 1 >= 0 else{return}
+            let selectCell = childVC.settingTableDataList[selectIndex.row]
+            let selectAboveCell = childVC.settingTableDataList[selectIndex.row - 1]
+            if tablePresentMode == .categort{
+                SQL.singletom?.changeCategoryIndex(withID: selectCell.databaseId, andID: selectAboveCell.databaseId)
+            }
+            else{
+                
+            }
+            let newIndex = IndexPath(row: selectIndex.row - 1, section: 0)
+            childVC.selectCellIndex = newIndex
+            childVC.tableView.selectRow(at: newIndex, animated: false, scrollPosition: UITableViewScrollPosition.bottom)
+        }
     }
     @IBAction func downItem(_ sender: Any) {
+        let childVC = self.childViewControllers[0] as! SettingTableViewController
+        if let selectIndex = childVC.selectCellIndex{
+            guard selectIndex.row <= childVC.settingTableDataList.count else{return}
+            guard selectIndex.row + 1 <= childVC.settingTableDataList.count else{return}
+            let selectCell = childVC.settingTableDataList[selectIndex.row]
+            let selectBelowCell = childVC.settingTableDataList[selectIndex.row + 1]
+            if tablePresentMode == .categort{
+                SQL.singletom?.changeCategoryIndex(withID: selectCell.databaseId, andID: selectBelowCell.databaseId)
+            }
+            else{
+                
+            }
+            let newIndex = IndexPath(row: selectIndex.row + 1, section: 0)
+            childVC.selectCellIndex = newIndex
+            childVC.tableView.selectRow(at: newIndex, animated: false, scrollPosition: UITableViewScrollPosition.top)
+        }
     }
     
     // MARK: static function

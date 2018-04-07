@@ -72,7 +72,7 @@ class CostSheetTests: XCTestCase {
         let index_2 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.categoryId == testDataId + 1)).first { (row) -> Bool in
             return true
             }![sql!.index]
-        sql!.changeCategoryIndex(with:testDataId, and:testDataId + 1)
+        sql!.changeCategoryIndex(withID:testDataId, andID:testDataId + 1)
         let newIndex_1 = try! sql!.SQLDataBase!.prepare(sql!.Category.filter(sql!.categoryId == testDataId)).first { (row) -> Bool in
             return true
             }![sql!.index]
@@ -82,8 +82,8 @@ class CostSheetTests: XCTestCase {
         //sql?.seeCategoryDatabase()
         XCTAssert(index_1 == newIndex_2 && index_2 == newIndex_1)
         // 測試刪除
-        sql!.removeCategory(by:testDataId)
-        sql!.removeCategory(by:testDataId + 1)
+        sql!.removeCategory(byID:testDataId)
+        sql!.removeCategory(byID:testDataId + 1)
         let countEnd = try! sql!.SQLDataBase!.scalar((sql?.Category.count)!)
         //sql?.seeCategoryDatabase()
         XCTAssert(countEnd == countBefore)

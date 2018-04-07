@@ -98,7 +98,7 @@ struct SQL{
     }
     
     // 把兩筆資料的顯示順序互換
-    func changeCategoryIndex(with id_1:Int, and id_2:Int){      // 把兩個資料的 Index 對調
+    func changeCategoryIndex(withID id_1:Int, andID id_2:Int){      // 把兩個資料的 Index 對調
         // 確認有撈到東西
         let obj_1 = try? SQLDataBase?.prepare(Category.filter(categoryId == id_1)).first(where: { (row) -> Bool in
             return true
