@@ -56,15 +56,6 @@ class SettingViewController:UIViewController{
             }
             let newIndex = IndexPath(row: selectIndex.row - 1, section: 0)
             childVC.selectCellIndex = newIndex
-            let cellRect = childVC.tableView.rectForRow(at: newIndex)
-            let cellTotleMinHeight = cellRect.origin.y
-            let scroolPosition = UITableViewScrollPosition.none     // 變換位置後 scroll的位置
-            childVC.tableView.selectRow(at: newIndex, animated: true, scrollPosition: scroolPosition)
-            if !childVC.tableView.bounds.contains(CGPoint(x: 0, y: cellTotleMinHeight)){    // 如果新位置 不再可視範圍內
-                //scroolPosition = .top
-                childVC.tableView.scrollToRow(at: newIndex, at: .top, animated: true)
-            }
-            
         }
     }
     @IBAction func downItem(_ sender: Any) {
@@ -81,15 +72,6 @@ class SettingViewController:UIViewController{
             }
             let newIndex = IndexPath(row: selectIndex.row + 1, section: 0)
             childVC.selectCellIndex = newIndex
-            //if childVC.tableView.cellForRow(at: newIndex).vis
-            let cellRect = childVC.tableView.rectForRow(at: newIndex)
-            let cellTotleMaxHeight = cellRect.origin.y + cellRect.height
-            var scroolPosition = UITableViewScrollPosition.none
-            if childVC.tableView.bounds.contains(CGPoint(x: 0, y: cellTotleMaxHeight)){
-                scroolPosition = .bottom
-            }
-            childVC.tableView.selectRow(at: newIndex, animated: true, scrollPosition: scroolPosition)
-            
         }
     }
     

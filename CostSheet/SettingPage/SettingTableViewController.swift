@@ -25,7 +25,12 @@ class SettingTableViewController:UITableViewController{
         }
     }
     private let model = SettingTableViewModel()
-    var selectCellIndex:IndexPath?
+    var selectCellIndex:IndexPath?{
+        didSet{
+            tableView.selectRow(at: selectCellIndex!, animated: false, scrollPosition: .none)
+            adjustmentScrollPosition(cellIndex: selectCellIndex!)
+        }
+    }
     var settingTableDataList:Array<BasicCellData> = []
     
     override func viewDidLoad() {
@@ -52,7 +57,7 @@ class SettingTableViewController:UITableViewController{
             let plusCell = tableView.dequeueReusableCell(withIdentifier: "PlusActionCell") as! PlusActionCell
             
             // 增加點擊手勢
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tap))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapAddCell))
             plusCell.addGestureRecognizer(tapGesture)
             
             return plusCell
@@ -92,17 +97,43 @@ class SettingTableViewController:UITableViewController{
     }
     
     // private function
+    // 客製化的reload table view
     private func customReloadTableView(){
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
     
-    @objc private func tap(){
+    // 點擊加號按鈕
+    @objc private func tapAddCell(){
         if tablePresentMode == .categort{
             self.present(CustomAlertStingleton.addNewCategory(), animated: true, completion: nil)
         }
     }
     
+    // 調整cell顯示視角
+    private func adjustmentScrollPosition(cellIndex:IndexPath){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let cellRect = self.tableView.rectForRow(at: cellIndex)
+            let cellOriginHeight = cellRect.origin.y
+            let cellDistanceWithTableViewTop = abs(self.tableView.bounds.origin.y - cellOriginHeight)
+            let cellDistanceWithTableViewBottom = abs(self.tableView.bounds.origin.y + self.tableView.bounds.size.height - cellOriginHeight)
+            
+            if cellDistanceWithTableViewTop < cellDistanceWithTableViewBottom{  // cell 現在比較靠近頂端
+                if !self.tableView.bounds.contains(CGPoint(x: 0, y: cellOriginHeight)){
+                    self.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
+                }
+            }
+            else{   // cell 現在比較靠近底部
+                if !self.tableView.bounds.contains(CGPoint(x: 0, y: (cellOriginHeight + cellRect.size.height))){
+                    self.tableView.scrollToRow(at: cellIndex, at: .bottom, animated: true)
+                }
+            }
+        }
+        
+    }
+    
+    
 }
+
 
 
 

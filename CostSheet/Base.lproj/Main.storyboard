@@ -96,7 +96,7 @@
                                 </constraints>
                             </stackView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GkP-m1-eZx">
-                                <rect key="frame" x="0.0" y="78" width="375" height="385"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="393"/>
                                 <connections>
                                     <segue destination="e7a-cr-yW8" kind="embed" id="8uG-XI-M3g"/>
                                 </connections>
@@ -150,7 +150,6 @@
                         <constraints>
                             <constraint firstItem="nBg-XJ-BS4" firstAttribute="bottom" secondItem="yiu-jr-mTE" secondAttribute="bottom" constant="100" id="1N1-mW-OEF"/>
                             <constraint firstItem="yiu-jr-mTE" firstAttribute="top" secondItem="GkP-m1-eZx" secondAttribute="bottom" constant="5" id="61k-Zd-ZiS"/>
-                            <constraint firstItem="GkP-m1-eZx" firstAttribute="top" secondItem="eGS-zv-ntn" secondAttribute="bottom" constant="8" id="8M9-mi-tdB"/>
                             <constraint firstItem="eGS-zv-ntn" firstAttribute="top" secondItem="nBg-XJ-BS4" secondAttribute="top" id="AJc-Hx-Yrp"/>
                             <constraint firstItem="nBg-XJ-BS4" firstAttribute="trailing" secondItem="eGS-zv-ntn" secondAttribute="trailing" id="LJn-G7-Bue"/>
                             <constraint firstItem="GkP-m1-eZx" firstAttribute="leading" secondItem="nBg-XJ-BS4" secondAttribute="leading" id="Ppy-Ho-bnm"/>
@@ -158,6 +157,7 @@
                             <constraint firstItem="nBg-XJ-BS4" firstAttribute="trailing" secondItem="yiu-jr-mTE" secondAttribute="trailing" id="eFo-gy-PIO"/>
                             <constraint firstItem="yiu-jr-mTE" firstAttribute="leading" secondItem="nBg-XJ-BS4" secondAttribute="leading" id="fBw-n7-8u9"/>
                             <constraint firstItem="GkP-m1-eZx" firstAttribute="trailing" secondItem="nBg-XJ-BS4" secondAttribute="trailing" id="pMD-DQ-jqo"/>
+                            <constraint firstItem="GkP-m1-eZx" firstAttribute="top" secondItem="nBg-XJ-BS4" secondAttribute="top" constant="50" id="y8F-2p-kJ5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nBg-XJ-BS4"/>
                     </view>
@@ -284,7 +284,7 @@
             <objects>
                 <tableViewController id="e7a-cr-yW8" customClass="SettingTableViewController" customModule="CostSheet" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qb3-nF-XeI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="385"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="393"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
