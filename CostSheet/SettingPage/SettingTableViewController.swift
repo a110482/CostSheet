@@ -130,7 +130,7 @@ class SettingTableViewController:UITableViewController{
     // 客製化的reload table view
     private func customReloadTableView(){
         self.tableView.reloadData()
-        scrollFirestCellToTop()
+        //scrollFirestCellToTop()
     }
     
     // 點擊加號按鈕
@@ -142,8 +142,8 @@ class SettingTableViewController:UITableViewController{
     
     // 調整cell選擇後顯示視角
     private func adjustmentScrollPosition(cellIndex:IndexPath){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {[weak self] in
-            guard self != nil else {return}
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {[weak self] in
+            //guard self != nil else {return}
             let cellRect = self!.tableView.rectForRow(at: cellIndex)
             let cellOriginHeight = cellRect.origin.y
             let cellDistanceWithTableViewTop = abs(self!.tableView.bounds.origin.y - cellOriginHeight)
@@ -166,7 +166,7 @@ class SettingTableViewController:UITableViewController{
     // 切換頁面後 把scroll 推到最上面
     private func scrollFirestCellToTop(){
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {[weak self] in
-            guard self != nil else{return}
+            guard self != nil && self!.settingTableDataList.count == 0 else{return}
             self!.tableView.setContentOffset(CGPoint.zero, animated: true)
         }
     }
