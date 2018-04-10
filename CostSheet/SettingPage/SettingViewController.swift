@@ -9,25 +9,30 @@
 import Foundation
 import UIKit
 
-enum TableViewPresentMode{
-    case categort
-    case fixedCost
-}
+
 class SettingViewController:UIViewController{
     
-    var tablePresentMode = TableViewPresentMode.categort
+    private var tablePresentMode = TableViewPresentMode.categort
+    private var settingTableViewController:SettingTableViewController!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        settingTableViewController = self.childViewControllers[0] as! SettingTableViewController
+    }
     
     @IBAction func setCategory(_ sender: Any) {
-        
+        settingTableViewController.setTablePresentMode(mode: .categort)
     }
+    
     @IBAction func setFixedCost(_ sender: Any) {
-        
+        settingTableViewController.setTablePresentMode(mode: .fixedCost)
     }
+    
     @IBAction func removeItem(_ sender: Any) {
         let childVC = self.childViewControllers[0] as! SettingTableViewController
-        if let selectIndex = childVC.selectCellIndex{
-            guard selectIndex.row <= childVC.settingTableDataList.count else{return}
-            let selectCell = childVC.settingTableDataList[selectIndex.row]
+        if let selectIndex = childVC.getSelectCellIndex(){
+            guard selectIndex.row <= childVC.settingTableDataListCount() else{return}
+            let selectCell = childVC.getCell(Index: selectIndex)
             if tablePresentMode == .categort{
                 SQL.singletom?.removeCategory(byID: selectCell.databaseId)
             }
@@ -36,18 +41,20 @@ class SettingViewController:UIViewController{
             }
         }
     }
+    
     @IBAction func addItem(_ sender: Any) {
         if tablePresentMode == .categort{
             self.present(CustomAlertStingleton.addNewCategory(), animated: true, completion: nil)
         }
     }
+    
     @IBAction func upItem(_ sender: Any) {
         let childVC = self.childViewControllers[0] as! SettingTableViewController
-        if let selectIndex = childVC.selectCellIndex{
-            guard selectIndex.row <= childVC.settingTableDataList.count - 1 else{return}
+        if let selectIndex = childVC.getSelectCellIndex(){
+            guard selectIndex.row <= childVC.settingTableDataListCount() - 1 else{return}
             guard selectIndex.row - 1 >= 0 else{return}
-            let selectCell = childVC.settingTableDataList[selectIndex.row]
-            let selectAboveCell = childVC.settingTableDataList[selectIndex.row - 1]
+            let selectCell = childVC.getCell(Index: selectIndex)
+            let selectAboveCell = childVC.getCell(Index: IndexPath(row: selectIndex.row - 1, section: 0))
             if tablePresentMode == .categort{
                 SQL.singletom?.changeCategoryIndex(withID: selectCell.databaseId, andID: selectAboveCell.databaseId)
             }
@@ -55,15 +62,16 @@ class SettingViewController:UIViewController{
                 
             }
             let newIndex = IndexPath(row: selectIndex.row - 1, section: 0)
-            childVC.selectCellIndex = newIndex
+            childVC.setSelectCellIndex(newIndex: newIndex)
         }
     }
+    
     @IBAction func downItem(_ sender: Any) {
         let childVC = self.childViewControllers[0] as! SettingTableViewController
-        if let selectIndex = childVC.selectCellIndex{
-            guard selectIndex.row + 1 <= childVC.settingTableDataList.count - 1 else{return}
-            let selectCell = childVC.settingTableDataList[selectIndex.row]
-            let selectBelowCell = childVC.settingTableDataList[selectIndex.row + 1]
+        if let selectIndex = childVC.getSelectCellIndex(){
+            guard selectIndex.row + 1 <= childVC.settingTableDataListCount() - 1 else{return}
+            let selectCell = childVC.getCell(Index: selectIndex)
+            let selectBelowCell = childVC.getCell(Index: IndexPath(row: selectIndex.row + 1, section: 0))
             if tablePresentMode == .categort{
                 SQL.singletom?.changeCategoryIndex(withID: selectCell.databaseId, andID: selectBelowCell.databaseId)
             }
@@ -71,18 +79,16 @@ class SettingViewController:UIViewController{
                 
             }
             let newIndex = IndexPath(row: selectIndex.row + 1, section: 0)
-            childVC.selectCellIndex = newIndex
+            childVC.setSelectCellIndex(newIndex: newIndex)
         }
     }
     
-    // MARK: static function
-    static func insertNewItemToSQL(){
-        
-    }
-    
-     
 }
 
+enum TableViewPresentMode{
+    case categort
+    case fixedCost
+}
 
 
 

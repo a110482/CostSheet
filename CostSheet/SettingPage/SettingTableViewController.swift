@@ -14,25 +14,49 @@ import UIKit
 //               2. model 發送 NotificationCenter 通知 VC 資料有更新
 //               3. 本ＶＣ 拷貝一份 資料的array到本地 然後加上一個“新增”的cell 再刷新頁面
 class SettingTableViewController:UITableViewController{
-    var tablePresentMode = TableViewPresentMode.categort{   // 記錄現在tableView的顯示內容是哪一種
+    // MARK: - interface
+    // 取得現在選擇的cell index
+    func getSelectCellIndex() -> IndexPath?{
+        return selectCellIndex
+    }
+    // 重設現在選擇的cell index
+    func setSelectCellIndex(newIndex:IndexPath){
+        selectCellIndex = newIndex
+    }
+    // 變更tableview 顯示內容
+    func setTablePresentMode(mode:TableViewPresentMode){
+        tablePresentMode = mode
+    }
+    // 取得某個cell的資料內容
+    func getCell(Index:IndexPath) -> BasicCellData{
+        return settingTableDataList[Index.row]
+    }
+    // 取得現在資料長度
+    func settingTableDataListCount() -> Int{
+        return settingTableDataList.count
+    }
+    
+    // MARK: - variable
+    private var tablePresentMode = TableViewPresentMode.categort{   // 記錄現在tableView的顯示內容是哪一種
         didSet{
             if tablePresentMode == .categort{
-                model.updataAllCategoryDataFromDatabase()
+                NotificationCenter.default.post(Notification(name: Notification.Name(catagorySQLChanged)))
             }
             else if tablePresentMode == .fixedCost{
-                
+                NotificationCenter.default.post(Notification(name: Notification.Name(fixedCostSQLChanged)))
             }
         }
     }
     private let model = SettingTableViewModel()
-    var selectCellIndex:IndexPath?{
+    private var selectCellIndex:IndexPath?{
         didSet{
             tableView.selectRow(at: selectCellIndex!, animated: false, scrollPosition: .none)
             adjustmentScrollPosition(cellIndex: selectCellIndex!)
         }
     }
-    var settingTableDataList:Array<BasicCellData> = []
+    private var settingTableDataList:Array<BasicCellData> = []
     
+    // MARK: - override
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,8 +64,14 @@ class SettingTableViewController:UITableViewController{
         let nib = UINib(nibName: "PlusActionCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "PlusActionCell")
         
-        NotificationCenter.default.addObserver(forName: Notification.Name(settingTableDataListUpdata), object: nil, queue: OperationQueue.main) {[weak self] (_) in
-            self?.settingTableDataList = (self?.model.settingTableDataList)!
+        NotificationCenter.default.addObserver(forName: Notification.Name(settingTableCatagoryDataListUpdata), object: nil, queue: OperationQueue.main) {[weak self] (_) in
+            guard self != nil && self!.tablePresentMode == .categort else{return}
+            self?.settingTableDataList = (self?.model.getSettingCatagoryTableDataList())!
+            self?.customReloadTableView()
+        }
+        NotificationCenter.default.addObserver(forName: Notification.Name(settingTableFixedCostDataListUpdata), object: nil, queue: OperationQueue.main) {[weak self] (_) in
+            guard self != nil && self!.tablePresentMode == .fixedCost else{return}
+            self?.settingTableDataList = (self?.model.getSettingFixedCostTableDataList())!
             self?.customReloadTableView()
         }
         tablePresentMode = .categort
@@ -96,10 +126,11 @@ class SettingTableViewController:UITableViewController{
         selectCellIndex = indexPath
     }
     
-    // private function
+    // MARK: - private function
     // 客製化的reload table view
     private func customReloadTableView(){
         self.tableView.reloadData()
+        scrollFirestCellToTop()
     }
     
     // 點擊加號按鈕
@@ -109,28 +140,36 @@ class SettingTableViewController:UITableViewController{
         }
     }
     
-    // 調整cell顯示視角
+    // 調整cell選擇後顯示視角
     private func adjustmentScrollPosition(cellIndex:IndexPath){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let cellRect = self.tableView.rectForRow(at: cellIndex)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {[weak self] in
+            guard self != nil else {return}
+            let cellRect = self!.tableView.rectForRow(at: cellIndex)
             let cellOriginHeight = cellRect.origin.y
-            let cellDistanceWithTableViewTop = abs(self.tableView.bounds.origin.y - cellOriginHeight)
-            let cellDistanceWithTableViewBottom = abs(self.tableView.bounds.origin.y + self.tableView.bounds.size.height - cellOriginHeight)
+            let cellDistanceWithTableViewTop = abs(self!.tableView.bounds.origin.y - cellOriginHeight)
+            let cellDistanceWithTableViewBottom = abs(self!.tableView.bounds.origin.y + self!.tableView.bounds.size.height - cellOriginHeight)
             
             if cellDistanceWithTableViewTop < cellDistanceWithTableViewBottom{  // cell 現在比較靠近頂端
-                if !self.tableView.bounds.contains(CGPoint(x: 0, y: cellOriginHeight)){
-                    self.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
+                if !self!.tableView.bounds.contains(CGPoint(x: 0, y: cellOriginHeight)){
+                    self!.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
                 }
             }
             else{   // cell 現在比較靠近底部
-                if !self.tableView.bounds.contains(CGPoint(x: 0, y: (cellOriginHeight + cellRect.size.height))){
-                    self.tableView.scrollToRow(at: cellIndex, at: .bottom, animated: true)
+                if !self!.tableView.bounds.contains(CGPoint(x: 0, y: (cellOriginHeight + cellRect.size.height))){
+                    self!.tableView.scrollToRow(at: cellIndex, at: .bottom, animated: true)
                 }
             }
         }
         
     }
     
+    // 切換頁面後 把scroll 推到最上面
+    private func scrollFirestCellToTop(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {[weak self] in
+            guard self != nil else{return}
+            self!.tableView.setContentOffset(CGPoint.zero, animated: true)
+        }
+    }
     
 }
 
