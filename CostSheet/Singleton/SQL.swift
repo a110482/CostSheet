@@ -9,17 +9,18 @@
 import Foundation
 import SQLite
 
+/// 這是SQL的singletom 初始化以後會連線到資料庫檔案
 struct SQL{
-    static let singletom = SQL()
-    var SQLDataBase:Connection?     // 資料庫接口
+    static let singleton = SQL()
+    private var SQLDataBase:Connection?     // 資料庫接口
     
     init?(){
         if !connectSQLFile(){return nil}
     }
     
-    // MARK: 主功能函數
+    // MARK: - 主功能函數
     // 跟資料庫連線
-    mutating func connectSQLFile() -> Bool{
+    private mutating func connectSQLFile() -> Bool{
         let urls = FileManager.default
             .urls(
                 for: .documentDirectory,
@@ -37,11 +38,15 @@ struct SQL{
             return false
         }
     }
+    // MARK: interface
     // 建立所有資料庫
     func establishAllTable(){
         try!establishCategoryTable()
         do
-        {try establishCostDetail()}
+        {
+            try establishCostDetail()
+            
+        }
         catch{print(error)}
     }
     func dropAllTable(){
@@ -55,14 +60,15 @@ struct SQL{
         case establishCostDetailFail
     }
     
-    // MARK: 預算分類
-    let Category = Table("Category")
-    let category = Expression<String>("category")
-    let costSheet = Expression<Double>("coseSheet")
-    let index = Expression<Int>("index")
-    let categoryId = Expression<Int>("categoryId")
+    // MARK: - 預算分類
+    // MARK: private
+    private let Category = Table("Category")
+    private let category = Expression<String>("category")
+    private let costSheet = Expression<Double>("coseSheet")
+    private let index = Expression<Int>("index")
+    private let categoryId = Expression<Int>("categoryId")
     
-    func establishCategoryTable() throws{
+    private func establishCategoryTable() throws{
         if let _ = try? SQLDataBase?.run(Category.create(ifNotExists:true){t in
             t.column(categoryId, primaryKey: true)
             t.columns([category, costSheet, index])
@@ -72,6 +78,11 @@ struct SQL{
         }
     }
     
+    private func notificationCategorySQLChanged(){
+        NotificationCenter.default.post(Notification(name: Notification.Name(catagorySQLChanged)))
+    }
+    
+    // MARK: interface
     func createNewCategory(category:String, costSheet:Double, complete:(()->Void)?){
         var categoryCount = 0
         if let lastData = try? SQLDataBase!.prepare(Category.limit(1).order(categoryId.desc)).first(where: { (row) -> Bool in
@@ -131,7 +142,7 @@ struct SQL{
         }
         return resultArray
     }
-        // for test
+    // MARK: for XCTest
     func seeCategoryDatabase(){
         if let data = try! SQLDataBase?.prepare(Category){
             print("--start print database--")
@@ -150,32 +161,67 @@ struct SQL{
     }
     
     
-    // MARK: 明細紀錄
-    let CostDetail = Table("CostDetail")
-    let costDetailId = Expression<Int>("costDetailId")
-    let categoryPk = Expression<Int>("categoryPk")
-    let cost = Expression<Int>("cost")
-    let time = Expression<Int>("time")
-    let imgPath = Expression<String>("imgPath")
+    // MARK: - 明細紀錄
+    // MARK: private
+    private let CostDetail = Table("CostDetail")
+    private let costDetailId = Expression<Int>("costDetailId")
+    private let categoryPk = Expression<Int>("categoryPk")
+    private let cost = Expression<Int>("cost")
+    private let time = Expression<Int>("time")
+    private let imgPath = Expression<String>("imgPath")
     
-    func establishCostDetail() throws{
+    private func establishCostDetail() throws{
         if let _ = try? SQLDataBase?.run(CostDetail.create(ifNotExists:true){t in
             t.column(costDetailId, primaryKey: true)
             t.columns([categoryPk, cost, time, imgPath])
-            t.foreignKey(categoryPk, references: Category, categoryId, update: .cascade, delete: .cascade)
+            t.foreignKey(categoryPk, references: Category, categoryId, update: nil, delete: .setNull)
         }){}
         else{
             throw SQLErrors.establishCostDetailFail
         }
     }
     
-    // MARK: private function
-    private func notificationCategorySQLChanged(){
-        NotificationCenter.default.post(Notification(name: Notification.Name(catagorySQLChanged)))
+    // MARK: - 固定金額開銷
+    // MARK: private
+    private let FixedCost = Table("FixedCost")
+    private let FixedCostId = Expression<Int>("FixedCostId")
+    private let fixedCostDetail = Expression<String>("fixedCostDetail")
+    private let expirationDate = Expression<Int?>("ExpirationDate")   // 記錄最後一筆付款時間的秒數since 1970
+    // FIXME: cell新增此項目
+    private let terms = Expression<String>("terms")
+    private let payData = Expression<Int>("payData")  // 付款日 每月的幾號
+    // FIXME: cell新增此項目
+    private let isPaid = Expression<Bool>("isPaid")
+    private let showDetailMode = Expression<Int>("showDetailMode")
+    // FIXME: 最後一欄有四種顯示模式
+    // 剩餘幾期要繳
+    // 剩餘總金額
+    // 最後一天付款日
+    // 距離最後一天付款日還有多久
+    // 本資料庫可能要新增欄位來記錄顯示模式
+    // 最後一欄 用滾動式選單來決定顯示項目  克制畫滾動清單讓他可以套到所有cell  一個小勾勾之累的
+    private func establishFixedCost() throws{
+        if let _ = try? SQLDataBase?.run(FixedCost.create(ifNotExists:true){t in
+            t.column(FixedCostId, primaryKey: true)
+            t.columns([fixedCostDetail, expirationDate, terms, payData, isPaid, showDetailMode])
+        }){}
+        else{
+            throw SQLErrors.establishCostDetailFail
+        }
+    }
+    
+    
+    // MARK: - 使用者設定
+    private let UserConfig = Table("UserConfig")
+    private let resetDate = Expression<Int>("resetDate")
+    
+    private func establishUserConfig(){
+        // FIXME: 實作
     }
     
 }
 
+// 擴充寫入 column 的語法
 extension TableBuilder{
     func columns(_ list:Array<Any>){
         for c in list{

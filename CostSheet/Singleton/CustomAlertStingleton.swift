@@ -26,15 +26,15 @@ struct CustomAlertStingleton {
             let appdelegate = UIApplication.shared.delegate
             let rootVC = appdelegate?.window!?.rootViewController as? LaunchViewController
             
-            guard CustomAlertStingleton.checkTextVaild(text: alert.textFields![0].text) else{
+            guard SuportFunctions.checkTextVaild(text: alert.textFields![0].text) else{
                 rootVC?.tabBarViewController?.errorAlertString = "字串不可為空"
                 return
             }
-            guard CustomAlertStingleton.checkDoubleVaild(text: alert.textFields![1].text) else {
+            guard SuportFunctions.checkDoubleVaild(text: alert.textFields![1].text) else {
                 rootVC?.tabBarViewController?.errorAlertString = "數字格式錯誤"
                 return
             }
-            SQL.singletom?.createNewCategory(
+            SQL.singleton?.createNewCategory(
                 category: alert.textFields![0].text!,
                 costSheet: Double(alert.textFields![1].text!)!,
                 complete: nil
@@ -51,23 +51,6 @@ struct CustomAlertStingleton {
         return alert
     }
     
-    
-    // MARK: suport func
-    // 檢查文字是否有效 移除空格並防止nil值
-    static func checkTextVaild(text:String?) -> Bool{
-        if let _ = text, text!.replacingOccurrences(of: " ", with: "") != ""{
-            return true
-        }
-        return false
-    }
-    
-    // 檢查文字是否能轉換為浮點數
-    static func checkDoubleVaild(text:String?) -> Bool{
-        if let _ = text , let _ = Double(text!.replacingOccurrences(of: " ", with: "")){
-            return true
-        }
-        return false
-    }
 }
 
 

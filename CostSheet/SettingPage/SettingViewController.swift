@@ -34,7 +34,7 @@ class SettingViewController:UIViewController{
             guard selectIndex.row <= childVC.settingTableDataListCount() else{return}
             let selectCell = childVC.getCell(Index: selectIndex)
             if tablePresentMode == .categort{
-                SQL.singletom?.removeCategory(byID: selectCell.databaseId)
+                SQL.singleton?.removeCategory(byID: selectCell.databaseId)
             }
             else{
                 
@@ -56,7 +56,7 @@ class SettingViewController:UIViewController{
             let selectCell = childVC.getCell(Index: selectIndex)
             let selectAboveCell = childVC.getCell(Index: IndexPath(row: selectIndex.row - 1, section: 0))
             if tablePresentMode == .categort{
-                SQL.singletom?.changeCategoryIndex(withID: selectCell.databaseId, andID: selectAboveCell.databaseId)
+                SQL.singleton?.changeCategoryIndex(withID: selectCell.databaseId, andID: selectAboveCell.databaseId)
             }
             else{
                 
@@ -73,7 +73,7 @@ class SettingViewController:UIViewController{
             let selectCell = childVC.getCell(Index: selectIndex)
             let selectBelowCell = childVC.getCell(Index: IndexPath(row: selectIndex.row + 1, section: 0))
             if tablePresentMode == .categort{
-                SQL.singletom?.changeCategoryIndex(withID: selectCell.databaseId, andID: selectBelowCell.databaseId)
+                SQL.singleton?.changeCategoryIndex(withID: selectCell.databaseId, andID: selectBelowCell.databaseId)
             }
             else{
                 

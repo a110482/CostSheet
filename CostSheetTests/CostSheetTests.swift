@@ -42,16 +42,16 @@ class CostSheetTests: XCTestCase {
     
     // MARK: SQLCenter
     func testdropAllTable(){
-        let sql = SQL.singletom
+        let sql = SQL.singleton
         sql?.dropAllTable()
     }
     
     func testextablishAllTable(){
-        let sql = SQL.singletom
+        let sql = SQL.singleton
         sql?.establishAllTable()
     }
     func testinsertDemoData(){
-        let sql = SQL.singletom
+        let sql = SQL.singleton
         
         sql?.seeCategoryDatabase()
         
