@@ -24,7 +24,7 @@ class CostSheetTests: XCTestCase {
     
     // MARK: SettingViewController
     func testcheckIntVaild(){
-        let vc = CustomAlertStingleton.self
+        let vc = SuportFunctions.singleton
         var result = vc.checkDoubleVaild(text: nil)
         XCTAssert(!result)
         result = vc.checkDoubleVaild(text: "037")
@@ -35,7 +35,7 @@ class CostSheetTests: XCTestCase {
         XCTAssert(result)
     }
     func testcheckTextVaild(){
-        let vc = CustomAlertStingleton.self
+        let vc = SuportFunctions.singleton
         let result = vc.checkTextVaild(text: nil)
         XCTAssert(!result)
     }
